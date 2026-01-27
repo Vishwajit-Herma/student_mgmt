@@ -1,5 +1,10 @@
 <h2>Admin Dashboard</h2>
 
+<form method="post" action="{% url 'accounts:logout' %}">
+  {% csrf_token %}
+  <button type="submit">Logout</button>
+</form>
+
 <p>Total Students: {{ total_students }}</p>
 <p>Total Courses: {{ total_courses }}</p>
 
