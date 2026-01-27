@@ -10,6 +10,6 @@ urlpatterns = [
     path("<int:pk>/edit/", views.student_update, name="edit"),
     path("<int:pk>/delete/", views.student_delete, name="delete"),
 
-    # teacher specific
-    path("teacher/", views.teacher_students, name="teacher_list"),
+    path("me/", views.my_profile, name="my_profile"),
+    path("me/edit/", views.edit_my_profile, name="edit_my_profile"),
 ]

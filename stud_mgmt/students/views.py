@@ -90,3 +90,28 @@ def student_delete(request, pk):
     return render(request, "students/student_confirm_delete.html", {
         "student": student
     })
+
+@login_required
+@role_required("STUDENT")
+def my_profile(request):
+    student = get_object_or_404(Student, user=request.user)
+
+    return render(request, "students/my_profile.html", {
+        "student": student
+    })
+
+@login_required
+@role_required("STUDENT")
+def edit_my_profile(request):
+    student = get_object_or_404(Student, user=request.user)
+
+    form = StudentForm(request.POST or None, instance=student)
+
+    if form.is_valid():
+        form.save()
+        messages.success(request, "Profile updated successfully")
+        return redirect("students:my_profile")
+
+    return render(request, "students/student_form.html", {
+        "form": form
+    })

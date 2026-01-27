@@ -1,0 +1,7 @@
+<h2>My Profile</h2>
+
+<p>Username: {{ student.user.username }}</p>
+<p>Course: {{ student.course.name }}</p>
+<p>Enrolled on: {{ student.enrolled_on }}</p>
+
+<a href="{% url 'students:edit_my_profile' %}">Edit Profile</a>
