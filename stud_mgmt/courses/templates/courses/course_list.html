@@ -1,0 +1,21 @@
+<h2>Courses</h2>
+
+{% if request.user.profile.role == "ADMIN" %}
+  <a href="{% url 'courses:add' %}">Add Course</a>
+{% endif %}
+
+<ul>
+  {% for course in courses %}
+    <li>
+      {{ course.name }} — {{ course.teacher.username }}
+
+      {% if request.user.profile.role == "ADMIN" or request.user == course.teacher %}
+        <a href="{% url 'courses:edit' course.id %}">Edit</a>
+      {% endif %}
+
+      {% if request.user.profile.role == "ADMIN" %}
+        <a href="{% url 'courses:delete' course.id %}">Delete</a>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
