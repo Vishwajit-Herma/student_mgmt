@@ -1,0 +1,7 @@
+<h2>Student Detail</h2>
+
+<p>Username: {{ student.user.username }}</p>
+<p>Course: {{ student.course.name }}</p>
+<p>Enrolled On: {{ student.enrolled_on }}</p>
+
+<a href="{% url 'students:list' %}">Back</a>
