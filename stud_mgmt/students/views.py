@@ -10,10 +10,22 @@ from accounts.utils import role_required
 @login_required
 @role_required("ADMIN", "TEACHER")
 def student_list(request):
-    students = Student.objects.select_related("user", "course")
+
+    user = request.user
+    role = user.profile.role
+
+    if role == "ADMIN":
+        students = Student.objects.select_related("user", "course")
+
+    elif role == "TEACHER":
+        students = Student.objects.select_related(
+            "user", "course"
+        ).filter(course__teacher=user)
+
     return render(request, "students/student_list.html", {
         "students": students
     })
+
 
 @login_required
 @role_required("ADMIN")
@@ -32,7 +44,20 @@ def student_create(request):
 @login_required
 @role_required("ADMIN", "TEACHER")
 def student_detail(request, pk):
-    student = get_object_or_404(Student, pk=pk)
+
+    user = request.user
+    role = user.profile.role
+
+    if role == "ADMIN":
+        student = get_object_or_404(Student, pk=pk)
+
+    else:  # TEACHER
+        student = get_object_or_404(
+            Student,
+            pk=pk,
+            course__teacher=user
+        )
+
     return render(request, "students/student_detail.html", {
         "student": student
     })
