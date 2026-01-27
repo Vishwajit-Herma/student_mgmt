@@ -1,0 +1,9 @@
+<h2>Admin Dashboard</h2>
+
+<p>Total Students: {{ total_students }}</p>
+<p>Total Courses: {{ total_courses }}</p>
+
+<ul>
+  <li><a href="{% url 'students:list' %}">Manage Students</a></li>
+  <li><a href="{% url 'courses:list' %}">Manage Courses</a></li>
+</ul>

@@ -1,0 +1,19 @@
+<h2>Teacher Dashboard</h2>
+
+<h3>My Courses</h3>
+<ul>
+  {% for course in courses %}
+    <li>{{ course.name }}</li>
+  {% empty %}
+    <li>No courses assigned</li>
+  {% endfor %}
+</ul>
+
+<h3>My Students</h3>
+<ul>
+  {% for student in students %}
+    <li>{{ student.user.username }}</li>
+  {% empty %}
+    <li>No students enrolled</li>
+  {% endfor %}
+</ul>
