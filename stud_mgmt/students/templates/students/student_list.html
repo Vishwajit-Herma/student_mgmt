@@ -1,15 +1,20 @@
 <h2>Students</h2>
 
-<a href="{% url 'students:add' %}">Add Student</a>
+{% if request.user.profile.role == "ADMIN" %}
+  <a href="{% url 'students:add' %}">Add Student</a>
+{% endif %}
 
 <ul>
   {% for student in students %}
     <li>
       {{ student.user.username }} – {{ student.course.name }}
-      |
+
       <a href="{% url 'students:detail' student.id %}">View</a>
-      <a href="{% url 'students:edit' student.id %}">Edit</a>
-      <a href="{% url 'students:delete' student.id %}">Delete</a>
+
+      {% if request.user.profile.role == "ADMIN" %}
+        <a href="{% url 'students:edit' student.id %}">Edit</a>
+        <a href="{% url 'students:delete' student.id %}">Delete</a>
+      {% endif %}
     </li>
   {% endfor %}
 </ul>

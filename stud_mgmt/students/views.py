@@ -4,8 +4,11 @@ from django.contrib import messages
 
 from .models import Student
 from .forms import StudentForm
+from accounts.utils import role_required
+
 
 @login_required
+@role_required("ADMIN", "TEACHER")
 def student_list(request):
     students = Student.objects.select_related("user", "course")
     return render(request, "students/student_list.html", {
@@ -13,6 +16,7 @@ def student_list(request):
     })
 
 @login_required
+@role_required("ADMIN")
 def student_create(request):
     form = StudentForm(request.POST or None)
 
@@ -26,6 +30,7 @@ def student_create(request):
     })
 
 @login_required
+@role_required("ADMIN", "TEACHER")
 def student_detail(request, pk):
     student = get_object_or_404(Student, pk=pk)
     return render(request, "students/student_detail.html", {
@@ -33,6 +38,7 @@ def student_detail(request, pk):
     })
 
 @login_required
+@role_required("ADMIN")
 def student_update(request, pk):
     student = get_object_or_404(Student, pk=pk)
     form = StudentForm(request.POST or None, instance=student)
@@ -47,6 +53,7 @@ def student_update(request, pk):
     })
 
 @login_required
+@role_required("ADMIN")
 def student_delete(request, pk):
     student = get_object_or_404(Student, pk=pk)
 
