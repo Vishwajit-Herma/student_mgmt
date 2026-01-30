@@ -12,3 +12,7 @@
   <li><a href="{% url 'students:list' %}">Manage Students</a></li>
   <li><a href="{% url 'courses:list' %}">Manage Courses</a></li>
 </ul>
+<form method="post" action="{% url 'accounts:logout' %}">
+  {% csrf_token %}
+  <button type="submit">Logout</button>
+</form>

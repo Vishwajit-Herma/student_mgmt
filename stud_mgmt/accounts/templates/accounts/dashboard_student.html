@@ -3,3 +3,7 @@
 <p>Name: {{ student.user.username }}</p>
 <p>Course: {{ student.course.name }}</p>
 <p>Enrolled on: {{ student.enrolled_on }}</p>
+<form method="post" action="{% url 'accounts:logout' %}">
+  {% csrf_token %}
+  <button type="submit">Logout</button>
+</form>
