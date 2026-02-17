@@ -13,7 +13,7 @@
         <a href="{% url 'courses:edit' course.id %}">Edit</a>
       {% endif %}
 
-      {% if request.user.profile.role == "ADMIN" %}
+      {% if request.user.profile.role == "ADMIN" or request.user == course.teacher %}
         <a href="{% url 'courses:delete' course.id %}">Delete</a>
       {% endif %}
     </li>

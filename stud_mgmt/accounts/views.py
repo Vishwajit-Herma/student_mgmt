@@ -1,5 +1,8 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+
 
 from students.models import Student
 from courses.models import Course
@@ -25,3 +28,21 @@ def dashboard(request):
         template = "accounts/dashboard_student.html"
 
     return render(request, template, context)
+
+
+def register(request):
+    if request.user.is_authenticated:
+        return redirect("dashboard")
+    
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect("dashboard")
+    else:
+        form = UserCreationForm()
+    template = "accounts/register.html"
+    context = {"form": form}
+    return render(request, template, context    )
+

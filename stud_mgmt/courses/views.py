@@ -22,12 +22,14 @@ def course_list(request):
     })
 
 @login_required
-@role_required("ADMIN")
+@role_required("ADMIN", "TEACHER")
 def course_create(request):
     form = CourseForm(request.POST or None)
 
     if form.is_valid():
-        form.save()
+        course = form.save(commit=False)
+        course.teacher = request.user
+        course.save()
         messages.success(request, "Course created successfully")
         return redirect("courses:list")
 
@@ -49,7 +51,9 @@ def course_update(request, pk):
     form = CourseForm(request.POST or None, instance=course)
 
     if form.is_valid():
-        form.save()
+        course = form.save(commit=False)
+        course.teacher = user
+        course.save()
         messages.success(request, "Course updated successfully")
         return redirect("courses:list")
 
@@ -58,7 +62,7 @@ def course_update(request, pk):
     })
 
 @login_required
-@role_required("ADMIN")
+@role_required("ADMIN", "TEACHER")
 def course_delete(request, pk):
     course = get_object_or_404(Course, pk=pk)
 
@@ -67,7 +71,7 @@ def course_delete(request, pk):
         messages.success(request, "Course deleted successfully")
         return redirect("courses:list")
 
-    return render(request, "courses/course_confirm_delete.html", {
+    return render(request, "courses/course_confirm.html", {
         "course": course
     })
 

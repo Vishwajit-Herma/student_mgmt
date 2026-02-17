@@ -1,22 +1,15 @@
 <h2>Teacher Dashboard</h2>
 
 <h3>My Courses</h3>
-<ul>
-  {% for course in courses %}
-    <li>{{ course.name }}</li>
-  {% empty %}
-    <li>No courses assigned</li>
-  {% endfor %}
-</ul>
+<a href="{% url 'courses:list' %}"> Courses </a>
+<br></br>
+
+<button onclick="location.href='{% url 'courses:add' %}'">Create New Course</button>
 
 <h3>My Students</h3>
-<ul>
-  {% for student in students %}
-    <li>{{ student.user.username }}</li>
-  {% empty %}
-    <li>No students enrolled</li>
-  {% endfor %}
-</ul>
+<a href="{% url 'students:list' %}"> View Students </a>
+<br></br>
+
 <form method="post" action="{% url 'accounts:logout' %}">
   {% csrf_token %}
   <button type="submit">Logout</button>

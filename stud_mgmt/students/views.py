@@ -26,7 +26,6 @@ def student_list(request):
         "students": students
     })
 
-
 @login_required
 @role_required("ADMIN")
 def student_create(request):
@@ -42,7 +41,7 @@ def student_create(request):
     })
 
 @login_required
-@role_required("ADMIN", "TEACHER")
+@role_required("ADMIN", "TEACHER", "STUDENT")
 def student_detail(request, pk):
 
     user = request.user
